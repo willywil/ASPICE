@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mermaid Chart Bubble Flow</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        #mermaidChart {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="mermaidChart" class="mermaid">
+        graph LR
+            A["<a href='flowchart.html' target='_blank'>Ideation</a>\nThis is the initial phase where ideas are generated and brainstormed. \nThe ideation phase is broken down into top-level use cases, which are high-level scenarios that describe how the system will be used."] --> B["Preliminary Design Review (PDR)\nOnce the ideation phase is complete, the preliminary design is created and reviewed by subject matter experts.\n This review ensures that the design meets the requirements and is feasible."]
+            B --> C["Critical Design Review (CDR)\nAfter the PDR, the design is further refined and tested. \nThe CDR is the final review before the design is implemented and tested in real-world scenarios."]
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis',
+                padding: 10,
+                wrap: true, // Enable word wrapping for nodes
+                maxLabelWidth: 200, // Set a maximum width for labels
+                labelWrap: true, // Enable wrapping for long labels
+                width: 200 // Reduce the horizontal width of the nodes
+            },
+            theme: 'default',
+            securityLevel: 'loose',
+            themeCSS: `
+                .label {
+                    font-size: 18px !important;
+                    padding: 10px !important;
+                }
+                .node rect {
+                    stroke-width: 2px;
+                    stroke: #333;
+                    fill: #e6f3ff;
+                }
+                .edgePath {
+                    stroke-width: 2px;
+                }
+                .node {
+                    max-width: 200px; // Set a maximum width for nodes
+                    word-wrap: break-word; // Enable word wrapping for node text
+                }
+                .edgeLabel {
+                    max-width: 150px; // Set a maximum width for edge labels
+                    word-wrap: break-word; // Enable word wrapping for edge labels
+                }
+                .label {
+                    font-size: 18px !important;
+                    padding: 10px !important;
+                }
+                .node rect {
+                    stroke-width: 2px;
+                    stroke: #333;
+                    fill: #e6f3ff;
+                }
+                .edgePath {
+                    stroke-width: 2px;
+                }
+            `
+        });
+    </script>
+</body>
+</html>

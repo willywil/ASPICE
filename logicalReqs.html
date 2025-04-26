@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logical Parts</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        #mermaidChart {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <p><a href="flowchart.html" title="Go up one level">⬆️ Go up one level</a></p>
+    <h1>Logical Parts</h1>
+    <p>The logical parts of the system are described below:</p>
+    <ol>
+        <li><strong>State Machine Spec</strong>
+            <ul>
+                <li>Identify Transitions/Triggers</li>
+            </ul>
+        </li>
+        <li><strong>Interactions Spec</strong>
+            <ul>
+                <li>Identify Communication Processes</li>
+            </ul>
+        </li>
+        <li><strong>Signals List</strong>
+            <ul>
+                <li>Identify Protocols Needed</li>
+                <li>Identify Speeds Needed</li>
+            </ul>
+        </li>
+        <li><strong>Interfaces</strong>
+            <ul>
+                <li>Identify the to-from for each signal</li>
+            </ul>
+        </li>
+        <li><strong>Logical Parts List</strong>
+            <ul>
+                <li>Identify (at an abstract level) what needs to be inside the system</li>
+            </ul>
+        </li>
+        <li><strong>Block Diagrams</strong>
+            <ul>
+                <li>Graphically describe the sub-system using visual description</li>
+            </ul>
+        </li>
+        <li><strong>System-Level Measures of Effectiveness (MOEs)</strong>
+            <ul>
+                <li>Identify the criteria you plan to use to determine how well the system works</li>
+            </ul>
+        </li>
+        <li><strong>Add Performance Requirements</strong>
+            <ul>
+                <li>Based on MOEs</li>
+            </ul>
+        </li>
+    </ol>
+    <div id="mermaidChart" class="mermaid">
+        graph TD
+            A["List"] --> B["Interfaces"]
+            B --> C["Signals\n- Protocols\n- Speed"]
+            C --> D["State Machine Spec + Interactions Spec"]
+            D --> E["System-Level MOEs"]
+            E --> F["Add Performance Reqs"]
+            F --> G["Performance Metrics"]
+            G --> H["Final Review"]
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

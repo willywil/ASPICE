@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physical Requirements</title>
+</head>
+<body>
+    <p><a href="flowchart.html" title="Go up one level">⬆️ Go up one level</a></p>
+    <h1>Physical Requirements</h1>
+    <p>The physical structure of the system is described below:</p>
+    <ol>
+        <li><strong>Propose Solutions → CONOPs</strong>
+            <ul>
+                <li>MOEs + KPPs</li>
+                <li>Risks</li>
+                <li>TRLs + IRLs</li>
+                <li>Cost Estimate</li>
+                <li>Requirements + Verification Plans</li>
+            </ul>
+        </li>
+        <li><strong>Select a Solution Based on System-Level MOEs</strong></li>
+        <li><strong>Develop Component-Level Performance Requirements</strong></li>
+        <li><strong>Select Components Using Trade Studies</strong>
+            <ul>
+                <li>Micros/processors</li>
+            </ul>
+        </li>
+        <li><strong>Simulate</strong>
+            <ul>
+                <li>Select Outputs Based on MOEs</li>
+                <li>Select Relevant Inputs</li>
+            </ul>
+        </li>
+        <li><strong>Select Tech Stack Based on Micros + Performance Requirements</strong></li>
+        <li><strong>Generate State Machine</strong></li>
+        <li><strong>Generate Algorithms from Necessary UC Narratives</strong></li>
+        <li><strong>Generate Unit Tests for Embedded Code</strong></li>
+        <li><strong>CAD</strong></li>
+        <li><strong>Schematics</strong></li>
+        <li><strong>PCBs</strong></li>
+    </ol>
+    <div id="chartContainer">
+        <div id="mermaidChart" class="mermaid">
+            graph TD
+                A["Propose Solutions → CONOPs\n(Concept of Operations)"] --> B["MOEs + KPPs\n(Measures of Effectiveness + Key Performance Parameters)"]
+                A --> C["Risks\n(Potential Issues or Threats)"]
+                A --> D["TRLs + IRLs\n(Technology Readiness Levels + Integration Readiness Levels)"]
+                A --> E["Cost Estimate\n(Estimated Financial Requirements)"]
+                A --> F["Requirements + Verification Plans\n(Specifications and Validation Methods)"]
+                F --> G["Select a Solution Based on System-Level MOEs"]
+                G --> H["Develop Component-Level Performance Requirements"]
+                H --> I["Select Components Using Trade Studies"]
+                I --> J["Micros/processors"]
+                H --> K["Simulate"]
+                K --> L["Select Outputs Based on MOEs"]
+                K --> M["Select Relevant Inputs"]
+                H --> N["Select Tech Stack Based on Micros + Performance Requirements"]
+                N --> O["Generate State Machine"]
+                O --> P["Generate Algorithms from Necessary UC Narratives"]
+                P --> Q["Generate Unit Tests for Embedded Code"]
+                Q --> R["CAD"]
+                R --> S["Schematics"]
+                S --> T["PCBs"]
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'basis',
+                nodeSpacing: 50,
+                rankSpacing: 70
+            },
+            theme: 'default',
+            securityLevel: 'loose',
+            themeCSS: `
+                .label {
+                    font-size: 18px !important;
+                    padding: 10px !important;
+                }
+                .node rect {
+                    stroke-width: 2px;
+                    stroke: #333;
+                    fill: #e6f3ff;
+                }
+                .edgePath {
+                    stroke-width: 2px;
+                }
+            `
+        });
+    </script>
+</body>
+</html>

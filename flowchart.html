@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Zoomable and Pannable System Design Flowchart (Vertical)</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            height: 100vh;
+        }
+        #chartContainer {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            position: relative;
+            touch-action: none; /* Prevents default touch behaviors */
+        }
+        #mermaidChart {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            min-width: 1200px; /* Adjusted for vertical layout */
+            min-height: 2000px; /* Increased height for vertical progression */
+            transform-origin: top left;
+            transition: transform 0.1s;
+        }
+        .mermaid {
+            font-size: 16px; /* Base font size for better readability */
+        }
+    </style>
+</head>
+<body>
+    <h1>USE CASE</h1>
+    <p><a href="mermaid_bubble_flow.html" title="Go to Bubble Flow">⬆️ Go to Bubble Flow</a></p>
+    <p><a href="logicalReqs.html" title="Go to Logical Parts">⬆️ Go to Logical Parts</a></p>
+    <div id="chartContainer">
+        <div id="mermaidChart" class="mermaid">
+            graph TD
+                A["1. Ideation\n('Lightbulb Moment')"] --> B["2. Top Level Use Cases\n('What does my system accomplish?')"]
+                B --> C["3. Use Case Narratives\n- When?\n- How?\n- What if...?"]
+                C --> D["4. Write Requirements\n('Functional reqs. for each UC Narrative')
+                \n- <a href='FunctionalReqs.html' target='_blank'>Functional Requirements</a>
+                \n- <a href='logicalReqs.html' target='_blank'>Logical Requirement</a>
+                \n- <a href="PhysicalReqs.html" target="_blank">Physical Requirements</a>
+                \n- <a href='NonFunctionalReqs.html' target='_blank'>Non-Functional Requirements</a>
+                \n- <a href='PerformanceReqs.html' target='_blank'>Performance Requirements</a>"]
+                D --> E["5. Loop Recursively\n('Iterate to refine 2-4 until well-defined')"]
+                E -->|Yes| B
+                E -->|No| F["6. Requirement Definition Verification Methods\n- Demonstration\n- Inspection\n- Analysis\n- Test"]
+                                subgraph Top Level Use Cases
+                    B
+                    C
+                    D
+                    E
+                    F
+                end
+                F --> G["7. Verification Methods\n -Demonstration\n -Inspectionn\n -Analysis\n -Test"]
+        </div>
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'basis',
+                nodeSpacing: 50,
+                rankSpacing: 70
+            },
+            theme: 'default',
+            securityLevel: 'loose',
+            themeCSS: `
+                .label {
+                    font-size: 18px !important;
+                    padding: 10px !important;
+                }
+                .node rect {
+                    stroke-width: 2px;
+                    stroke: #333;
+                    fill: #e6f3ff;
+                }
+                .edgePath {
+                    stroke-width: 2px;
+                }
+            `
+        });
+
+        // Zoom and Pan functionality
+        const chartContainer = document.getElementById('chartContainer');
+        const chart = document.getElementById('mermaidChart');
+        let scale = 1;
+        let posX = 0;
+        let posY = 0;
+        let isPanning = false;
+        let startX, startY;
+
+        // Mouse events for panning
+        chartContainer.addEventListener('mousedown', (e) => {
+            isPanning = true;
+            startX = e.clientX - posX;
+            startY = e.clientY - posY;
+            chartContainer.style.cursor = 'grabbing';
+        });
+
+        chartContainer.addEventListener('mousemove', (e) => {
+            if (isPanning) {
+                posX = e.clientX - startX;
+                posY = e.clientY - startY;
+                chart.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+            }
+        });
+
+        chartContainer.addEventListener('mouseup', () => {
+            isPanning = false;
+            chartContainer.style.cursor = 'grab';
+        });
+
+        chartContainer.addEventListener('mouseleave', () => {
+            isPanning = false;
+            chartContainer.style.cursor = 'grab';
+        });
+
+        // Touch events for panning
+        chartContainer.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) {
+                isPanning = true;
+                startX = e.touches[0].clientX - posX;
+                startY = e.touches[0].clientY - posY;
+            }
+        });
+
+        chartContainer.addEventListener('touchmove', (e) => {
+            if (isPanning && e.touches.length === 1) {
+                posX = e.touches[0].clientX - startX;
+                posY = e.touches[0].clientY - startY;
+                chart.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+            }
+        });
+
+        chartContainer.addEventListener('touchend', () => {
+            isPanning = false;
+        });
+
+        // Zoom with mouse wheel
+        chartContainer.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            scale = Math.min(Math.max(scale + delta, 0.5), 3); // Limit scale between 0.5x and 3x
+            chart.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+        });
+
+        // Pinch to zoom for touch devices
+        let initialDistance = 0;
+        let initialScale = scale;
+
+        chartContainer.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 2) {
+                isPanning = false;
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+                initialDistance = Math.hypot(
+                    touch1.clientX - touch2.clientX,
+                    touch1.clientY - touch2.clientY
+                );
+                initialScale = scale;
+            }
+        });
+
+        chartContainer.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 2) {
+                const touch1 = e.touches[0];
+                const touch2 = e.touches[1];
+                const currentDistance = Math.hypot(
+                    touch1.clientX - touch2.clientX,
+                    touch1.clientY - touch2.clientY
+                );
+                scale = initialScale * (currentDistance / initialDistance);
+                scale = Math.min(Math.max(scale, 0.5), 3); // Limit scale
+                chart.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+            }
+        });
+    </script>
+</body>
+</html>

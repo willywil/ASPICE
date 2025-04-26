@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Functional Requirements Flowchart</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            height: 100vh;
+        }
+        #chartContainer {
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            position: relative;
+            touch-action: none;
+        }
+        #mermaidChart {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            min-width: 1200px;
+            min-height: 2000px;
+            transform-origin: top left;
+            transition: transform 0.1s;
+        }
+        .mermaid {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Functional Requirements Flowchart</h1>
+        <p><a href="flowchart.html" title="Go up one level">⬆️ Go up one level</a></p>
+        <h1>Functional Requirements</h1>
+        <p>The functional behavior of the system is described below:</p>
+        <ol>
+            <li><strong>Top Level Use Cases (UCs)</strong>
+                <ul>
+                    <li>"What does my system accomplish?"</li>
+                </ul>
+            </li>
+            <li><strong>UC Narratives</strong>
+                <ul>
+                    <li>When?</li>
+                    <li>How?</li>
+                    <li>What if...?</li>
+                </ul>
+            </li>
+            <li><strong>Functional Requirements</strong>
+                <ul>
+                    <li>For each UC Narrative</li>
+                </ul>
+            </li>
+            <li><strong>Verification Methods</strong>
+                <ul>
+                    <li>For each requirement</li>
+                </ul>
+            </li>
+            <li><strong>Iterate</strong></li>
+        </ol>
+    <div id="chartContainer">
+        <div id="mermaidChart" class="mermaid">
+            graph TD
+                A["Top Level Use Cases (UCs)\n'What does my system accomplish?'"] --> B["UC Narratives\n- When?\n- How?\n- What if...?"]
+                B --> C["Functional Requirements\nFor each UC Narrative"]
+                C --> D["Verification Methods\nFor each requirement"]
+                D --> E["Iterate"]
+                E -->|Back to Step 1| A
+                E -->|Verification Complete| F["Final Approval"]
+        </div>
+    </div>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            flowchart: {
+                useMaxWidth: false,
+                htmlLabels: true,
+                curve: 'basis',
+                nodeSpacing: 50,
+                rankSpacing: 70
+            },
+            theme: 'default',
+            securityLevel: 'loose',
+            themeCSS: `
+                .label {
+                    font-size: 18px !important;
+                    padding: 10px !important;
+                }
+                .node rect {
+                    stroke-width: 2px;
+                    stroke: #333;
+                    fill: #e6f3ff;
+                }
+                .edgePath {
+                    stroke-width: 2px;
+                }
+            `
+        });
+
+        const chartContainer = document.getElementById('chartContainer');
+        const chart = document.getElementById('mermaidChart');
+        let scale = 1;
+        let posX = 0;
+        let posY = 0;
+        let isPanning = false;
+        let startX, startY;
+
+        chartContainer.addEventListener('mousedown', (e) => {
+            isPanning = true;
+            startX = e.clientX - posX;
+            startY = e.clientY - posY;
+            chartContainer.style.cursor = 'grabbing';
+        });
+
+        chartContainer.addEventListener('mousemove', (e) => {
+            if (isPanning) {
+                posX = e.clientX - startX;
+                posY = e.clientY - startY;
+                chart.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+            }
+        });
+
+        chartContainer.addEventListener('mouseup', () => {
+            isPanning = false;
+            chartContainer.style.cursor = 'grab';
+        });
+
+        chartContainer.addEventListener('mouseleave', () => {
+            isPanning = false;
+            chartContainer.style.cursor = 'grab';
+        });
+
+        chartContainer.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY > 0 ? -0.1 : 0.1;
+            scale = Math.min(Math.max(scale + delta, 0.5), 3);
+            chart.style.transform = `translate(${posX}px, ${posY}px) scale(${scale})`;
+        });
+    </script>
+</body>
+</html>
